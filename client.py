@@ -2,22 +2,22 @@
 
 import sys
 import socket
+from sys import argv
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-if __name__ == '__main__':
-    sys.stderr.write("client is not implemented yet\n")
 
 try:
-    socket.gethostbyname(host)
+    socket.gethostbyname(argv[1])
     print("Good Host")
 except:
     print("Could not connect to host")
 
 try:
-    sock.connect((host, port))
+    sock.connect((argv[1], argv[2]))
+except socket.error as err:
+    print("Could not connect to hostdue error:" + err)
 
- except socket.error:
-    print("Could not connect to host")
+send = sock.send(b"accio\r\n")
 
-
- sock.close()
+b = sock.recv(1024)
+sock.close()
