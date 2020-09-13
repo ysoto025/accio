@@ -5,6 +5,7 @@ import socket
 from sys import argv
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 2048)
 
 try:
     socket.gethostbyname(argv[1])
@@ -13,7 +14,7 @@ except:
     print("Could not connect to host")
 
 try:
-    sock.connect((argv[1], argv[2]))
+    sock.connect((argv[1], int(argv[2])))
 except socket.error as err:
     print("Could not connect to hostdue error:" + err)
 
